@@ -1,28 +1,34 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import {
-  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @ObjectType()
 @Entity()
-export class User extends BaseEntity {
+export class User {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
-  @Field(() => String)
+  @Field(() => String, {
+    description: '사용자의 닉네임, 중복 가능, NULL 이면 자동 생성됨.',
+  })
   @Column()
-  nickname: string;
+  nickname!: string;
 
-  @Field(() => String)
+  @Column({ unique: true })
+  loginIdentifier!: string;
+
   @Column()
-  passwordHash: string;
+  hashedPassword!: string;
 
-  @Field(() => Date)
   @CreateDateColumn()
-  createdDate: Date;
+  createdAt!: Date;
+
+  @UpdateDateColumn()
+  updatedAt!: Date;
 }
