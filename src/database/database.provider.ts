@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import { config } from '../lib/config';
+import { Inject } from '@nestjs/common';
 
 export const DATA_SOURCE_TOKEN = 'DATA_SOURCE';
 
@@ -20,3 +21,5 @@ export const databaseProviders = [
     },
   },
 ] as const;
+
+export const InjectDataSource = () => Inject(DATA_SOURCE_TOKEN);
